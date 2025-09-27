@@ -4,7 +4,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Özdemir Nakliyat</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 <script>
         tailwind.config = {
@@ -12,193 +12,783 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: "#D4AF37",
-                        "background-light": "#F3F4F6",
-                        "background-dark": "#111827",
-                        "surface-light": "#FFFFFF",
-                        "surface-dark": "#1F2937",
-                        "text-light": "#111827",
-                        "text-dark": "#F3F4F6",
-                        "muted-light": "#6B7280",
-                        "muted-dark": "#9CA3AF"
+                        primary: "#E3C874",
+                        "primary-soft": "rgba(227, 200, 116, 0.12)",
+                        "background-deep": "#060708",
+                        "background-elevated": "rgba(21, 23, 26, 0.78)",
+                        "surface-muted": "rgba(34, 37, 43, 0.66)",
+                        "text-primary": "#F9F9F2",
+                        "text-muted": "#A6AEBD",
                     },
                     fontFamily: {
-                        display: ["Montserrat", "sans-serif"],
+                        sans: ["Montserrat", "sans-serif"],
+                        luxury: ['Playfair Display', "serif"],
+                    },
+                    boxShadow: {
+                        halo: "0 20px 60px rgba(227, 200, 116, 0.18)",
+                        aurora: "0 25px 70px rgba(12, 14, 16, 0.75)",
                     },
                     borderRadius: {
-                        DEFAULT: "0.5rem",
+                        xl: "1.5rem",
+                        '2xl': "2rem",
                     },
                 },
             },
         };
     </script>
 <style>
+        :root {
+            color-scheme: dark;
+        }
+
         body {
             font-family: 'Montserrat', sans-serif;
+            background: radial-gradient(circle at 20% 20%, rgba(46, 55, 73, 0.35), transparent 45%),
+                radial-gradient(circle at 80% 10%, rgba(109, 86, 38, 0.35), transparent 55%),
+                #050607;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            color: #f1f1f4;
         }
-        .hero-bg {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('image-placeholder-1.png');
-            background-size: cover;
-            background-position: center;
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: -25vh -20vw;
+            background: conic-gradient(from 180deg at 30% 30%, rgba(230, 194, 92, 0.18), rgba(51, 59, 78, 0.04), rgba(230, 194, 92, 0.22));
+            filter: blur(85px);
+            opacity: 0.7;
+            pointer-events: none;
+            animation: aurora-shift 18s ease-in-out infinite;
+            z-index: -3;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160"><g fill="none" stroke="rgba(255,255,255,0.015)" stroke-width="1"><path d="M0 160 160 0"/><path d="M-40 160 160 -40"/><path d="M40 160 160 40"/><path d="M80 160 160 80"/><path d="M120 160 160 120"/></g></svg>');
+            background-size: 12rem;
+            mix-blend-mode: soft-light;
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        .glass-panel {
+            background: linear-gradient(135deg, rgba(22, 24, 28, 0.82), rgba(15, 17, 21, 0.68));
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(18px);
+            box-shadow: 0 28px 55px rgba(5, 6, 8, 0.65);
+        }
+
+        .satin-card {
+            background: linear-gradient(160deg, rgba(30, 34, 41, 0.92), rgba(16, 18, 23, 0.84));
+            border: 1px solid rgba(227, 200, 116, 0.12);
+            box-shadow: 0 35px 80px rgba(8, 9, 12, 0.65);
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.6s;
+        }
+
+        .satin-card:hover {
+            transform: translateY(-18px) scale(1.02);
+            box-shadow: 0 40px 85px rgba(227, 200, 116, 0.26);
+        }
+
+        .nav-link {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: 0.15rem;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(227, 200, 116, 0), rgba(227, 200, 116, 0.85), rgba(227, 200, 116, 0));
+            transition: width 0.4s ease, left 0.4s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .mobile-nav {
+            display: flex;
+            gap: 1.4rem;
+            overflow-x: auto;
+            padding-bottom: 0.1rem;
+            padding-inline: 0.25rem;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .mobile-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .mobile-nav-link {
+            position: relative;
+            flex: 0 0 auto;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            font-size: 0.58rem;
+            padding-bottom: 0.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-nav-link:hover {
+            color: rgba(227, 200, 116, 0.85);
+        }
+
+        .mobile-nav-link::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(227, 200, 116, 0), rgba(227, 200, 116, 0.8), rgba(227, 200, 116, 0));
+            transition: width 0.35s ease, left 0.35s ease;
+        }
+
+        .mobile-nav-link:hover::after,
+        .mobile-nav-link.text-primary::after {
+            width: 100%;
+            left: 0;
+        }
+
+        .hero-stage {
+            position: relative;
+            border-radius: 2.5rem;
+            padding: clamp(2.75rem, 5vw, 4rem);
+            background: linear-gradient(145deg, rgba(17, 19, 24, 0.82), rgba(10, 11, 14, 0.94));
+            border: 1px solid rgba(227, 200, 116, 0.08);
+            box-shadow: 0 45px 120px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+        }
+
+        .hero-stage::before,
+        .hero-stage::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(65px);
+            opacity: 0.75;
+            mix-blend-mode: screen;
+            pointer-events: none;
+        }
+
+        .hero-stage::before {
+            width: 32rem;
+            height: 32rem;
+            top: -10rem;
+            right: -6rem;
+            background: radial-gradient(circle, rgba(227, 200, 116, 0.35), transparent 65%);
+            animation: float 14s ease-in-out infinite;
+        }
+
+        .hero-stage::after {
+            width: 26rem;
+            height: 26rem;
+            bottom: -8rem;
+            left: -4rem;
+            background: radial-gradient(circle, rgba(81, 93, 126, 0.35), transparent 70%);
+            animation: float 16s ease-in-out infinite reverse;
+        }
+
+        .halo-button {
+            position: relative;
+            border-radius: 9999px;
+            overflow: hidden;
+            border: 1px solid rgba(227, 200, 116, 0.45);
+            background: linear-gradient(120deg, rgba(227, 200, 116, 0.2), rgba(227, 200, 116, 0.55));
+            color: #0b0d0f;
+            font-weight: 600;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .halo-button span::after {
+            content: "";
+            position: absolute;
+            inset: -180% -60%;
+            background: linear-gradient(120deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0));
+            transform: rotate(18deg);
+            animation: sheen 5s linear infinite;
+            opacity: 0.8;
+        }
+
+        .halo-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 25px 70px rgba(227, 200, 116, 0.38);
+        }
+
+        .outline-button {
+            position: relative;
+            border-radius: 9999px;
+            border: 1px solid rgba(227, 200, 116, 0.55);
+            color: #f5f5f5;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            background: rgba(227, 200, 116, 0.08);
+            transition: border-color 0.35s ease, background 0.35s ease, transform 0.35s ease;
+        }
+
+        .outline-button:hover {
+            border-color: rgba(227, 200, 116, 0.95);
+            background: rgba(227, 200, 116, 0.18);
+            transform: translateY(-3px);
+        }
+
+        .hero-detail-card {
+            position: relative;
+            background: linear-gradient(160deg, rgba(25, 27, 31, 0.94), rgba(12, 13, 16, 0.88));
+            border: 1px solid rgba(227, 200, 116, 0.12);
+            border-radius: 1.75rem;
+            padding: 2.5rem;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.65);
+        }
+
+        .hero-detail-card::before {
+            content: "";
+            position: absolute;
+            inset: 0.6rem;
+            border-radius: 1.45rem;
+            border: 1px solid rgba(227, 200, 116, 0.08);
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .hero-detail-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 1.75rem;
+            background: radial-gradient(circle at top right, rgba(227, 200, 116, 0.16), transparent 55%);
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .accent-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.45rem 0.85rem;
+            border-radius: 9999px;
+            background: rgba(227, 200, 116, 0.1);
+            border: 1px solid rgba(227, 200, 116, 0.35);
+            font-size: 0.75rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+        }
+
+        .stat-grid {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        }
+
+        .stat-item {
+            position: relative;
+            padding: 1.35rem 1.25rem;
+            border-radius: 1.5rem;
+            background: linear-gradient(140deg, rgba(20, 22, 27, 0.9), rgba(18, 20, 24, 0.65));
+            border: 1px solid rgba(227, 200, 116, 0.18);
+            overflow: hidden;
+        }
+
+        .stat-item::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(160deg, rgba(227, 200, 116, 0.12), transparent 65%);
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .divider-line {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(227, 200, 116, 0), rgba(227, 200, 116, 0.45), rgba(227, 200, 116, 0));
+            margin: 1.5rem 0;
+        }
+
+        footer {
+            position: relative;
+            background: linear-gradient(160deg, rgba(12, 13, 15, 0.94), rgba(9, 10, 12, 0.92));
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 15% 15%, rgba(227, 200, 116, 0.18), transparent 45%),
+                radial-gradient(circle at 80% 80%, rgba(61, 70, 94, 0.25), transparent 65%);
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .footer-grid a {
+            transition: color 0.3s ease;
+        }
+
+        .footer-grid a:hover {
+            color: rgba(227, 200, 116, 0.9);
+        }
+
+        @keyframes float {
+            0%,
+            100% {
+                transform: translate3d(0, 0, 0);
+            }
+            50% {
+                transform: translate3d(14px, -18px, 0);
+            }
+        }
+
+        @keyframes sheen {
+            0% {
+                transform: translateX(-220%) rotate(18deg);
+            }
+            100% {
+                transform: translateX(220%) rotate(18deg);
+            }
+        }
+
+        @keyframes aurora-shift {
+            0% {
+                transform: rotate(0deg) scale(1);
+            }
+            50% {
+                transform: rotate(8deg) scale(1.08);
+            }
+            100% {
+                transform: rotate(-2deg) scale(1);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .hero-stage {
+                border-radius: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body::after {
+                opacity: 0.45;
+            }
+
+            .hero-stage {
+                padding: 2.2rem;
+            }
+
+            .nav-link {
+                letter-spacing: 0.25em;
+            }
+
+            .halo-button,
+            .outline-button {
+                letter-spacing: 0.32em;
+            }
+
+            .hero-detail-card {
+                padding: 2.1rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero-stage {
+                padding: 1.75rem;
+                border-radius: 1.75rem;
+            }
+
+            .hero-stage::before {
+                width: 22rem;
+                height: 22rem;
+                top: -8rem;
+                right: -4rem;
+            }
+
+            .hero-stage::after {
+                width: 20rem;
+                height: 20rem;
+                bottom: -6rem;
+                left: -3rem;
+            }
+
+            .hero-detail-card {
+                padding: 1.85rem;
+            }
+
+            .stat-grid {
+                gap: 1rem;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .accent-chip {
+                font-size: 0.68rem;
+                letter-spacing: 0.28em;
+            }
+
+            .mobile-nav {
+                gap: 1rem;
+            }
         }
     </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark font-display">
-<header class="bg-surface-light dark:bg-surface-dark shadow-md sticky top-0 z-50">
-<div class="container mx-auto px-6 py-4">
-<div class="flex justify-between items-center">
-<div class="text-3xl font-bold text-text-light dark:text-text-dark tracking-wider">
-                    ÖZDEMİR <span class="text-primary">NAKLİYAT</span>
-</div>
-<div class="hidden md:flex items-center space-x-8">
-<div class="flex items-center space-x-2 text-sm">
-<i class="material-icons text-primary">phone</i>
-<div>
-<p class="text-muted-light dark:text-muted-dark">Telefon:</p>
-<p class="font-semibold">0216 494 5337</p>
-</div>
-</div>
-<div class="flex items-center space-x-2 text-sm">
-<i class="material-icons text-primary">phone_iphone</i>
-<div>
-<p class="text-muted-light dark:text-muted-dark">GSM:</p>
-<p class="font-semibold">0532 138 4979</p>
-</div>
-</div>
-<div class="flex items-center space-x-2 text-sm">
-<i class="material-icons text-primary">email</i>
-<div>
-<p class="text-muted-light dark:text-muted-dark">E-Mail:</p>
-<p class="font-semibold">info@ozdemirnakliyat.com</p>
-</div>
-</div>
-<button class="bg-primary text-white font-bold py-2 px-6 rounded-lg hover:opacity-90 transition-opacity">
-                        FİYAT HESAPLA
-                    </button>
-</div>
-<div class="md:hidden">
-<button class="text-text-light dark:text-text-dark">
-<i class="material-icons">menu</i>
-</button>
-</div>
-</div>
-</div>
-<nav class="bg-gray-800 dark:bg-gray-900 text-white">
-<div class="container mx-auto px-6">
-<div class="flex justify-center items-center h-16">
-<div class="flex space-x-10">
-<a class="text-white hover:text-primary transition-colors border-b-2 border-primary pb-1" href="#">Ana Sayfa</a>
-<a class="text-gray-300 hover:text-primary transition-colors" href="#">Hakkımızda</a>
-<a class="text-gray-300 hover:text-primary transition-colors" href="#">Hizmetlerimiz</a>
-<a class="text-gray-300 hover:text-primary transition-colors" href="#">Galeri</a>
-<a class="text-gray-300 hover:text-primary transition-colors" href="#">Referanslar</a>
-<a class="text-gray-300 hover:text-primary transition-colors" href="#">İletişim</a>
-</div>
-</div>
-</div>
-</nav>
+<body class="bg-background-deep text-text-primary font-sans antialiased">
+<header class="z-50 lg:sticky lg:top-0">
+    <div class="mx-auto max-w-7xl px-4 pt-6 sm:px-6 lg:pt-8">
+        <div class="glass-panel rounded-2xl px-5 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-7 flex flex-col gap-6">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div class="flex flex-col gap-1.5">
+                    <div class="text-[0.6rem] uppercase tracking-[0.45em] text-primary/80">Özdemir Nakliyat</div>
+                    <div class="text-3xl font-luxury text-primary/95 sm:text-4xl">Elit Taşımacılık Deneyimi</div>
+                </div>
+                <div class="flex justify-start sm:justify-end">
+                    <button class="halo-button relative px-7 py-3 text-[0.62rem]"><span class="relative inline-block">FİYAT HESAPLA</span></button>
+                </div>
+            </div>
+            <div class="hidden lg:flex flex-wrap justify-center gap-8 text-xs text-text-muted">
+                <a class="nav-link text-primary" href="#hero">Ana Sayfa</a>
+                <a class="nav-link hover:text-primary" href="#about">Hakkımızda</a>
+                <a class="nav-link hover:text-primary" href="#services">Hizmetlerimiz</a>
+                <a class="nav-link hover:text-primary" href="#gallery">Galeri</a>
+                <a class="nav-link hover:text-primary" href="#references">Referanslar</a>
+                <a class="nav-link hover:text-primary" href="#contact">İletişim</a>
+            </div>
+            <div class="mobile-nav lg:hidden text-text-muted">
+                <a class="mobile-nav-link text-primary" href="#hero">Ana Sayfa</a>
+                <a class="mobile-nav-link" href="#about">Hakkımızda</a>
+                <a class="mobile-nav-link" href="#services">Hizmetlerimiz</a>
+                <a class="mobile-nav-link" href="#gallery">Galeri</a>
+                <a class="mobile-nav-link" href="#references">Referanslar</a>
+                <a class="mobile-nav-link" href="#contact">İletişim</a>
+            </div>
+            <div class="grid grid-cols-1 gap-4 text-sm text-text-muted sm:grid-cols-3">
+                <div class="flex items-center gap-3">
+                    <span class="flex h-10 w-10 items-center justify-center rounded-full bg-primary-soft text-primary shadow-halo">
+                        <i class="material-icons text-base">phone_in_talk</i>
+                    </span>
+                    <div>
+                        <p class="text-[0.6rem] uppercase tracking-[0.35em] text-primary/70">Telefon</p>
+                        <p class="text-base font-semibold text-text-primary">0535 554 98 58</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="flex h-10 w-10 items-center justify-center rounded-full bg-primary-soft text-primary shadow-halo">
+                        <i class="material-icons text-base">smartphone</i>
+                    </span>
+                    <div>
+                        <p class="text-[0.6rem] uppercase tracking-[0.35em] text-primary/70">GSM</p>
+                        <p class="text-base font-semibold text-text-primary">0535 554 98 58</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span class="flex h-10 w-10 items-center justify-center rounded-full bg-primary-soft text-primary shadow-halo">
+                        <i class="material-icons text-base">email</i>
+                    </span>
+                    <div>
+                        <p class="text-[0.6rem] uppercase tracking-[0.35em] text-primary/70">E-Mail</p>
+                        <p class="text-base font-semibold text-text-primary">info@ozdemirnakliyat.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </header>
-<main>
-<section class="hero-bg text-white">
-<div class="container mx-auto px-6 py-40 text-center">
-<h1 class="text-5xl md:text-7xl font-bold mb-4 tracking-tight leading-tight">Özdemir Evden Eve Nakliyat</h1>
-<p class="text-lg md:text-xl max-w-3xl mx-auto text-gray-300 mb-8">
-                    Özdemir evden eve nakliyat şirketi olarak Türkiye geneli Şehiriçi Taşıma, Şehirler Arası Nakliyat, parça eşya taşıma, Profesyonel Nakliye ve Taşımacılık Hizmetleri sunmaktayız. Nakliyat sektörü lider firması ile nakliye hizmeti alarak güvenle taşının.
+<main class="relative">
+    <section class="relative pt-20 pb-20 sm:pt-24 sm:pb-28" id="hero">
+        <div class="absolute inset-x-0 top-0 flex justify-center" aria-hidden="true">
+            <div class="h-56 w-56 rounded-full bg-primary/10 blur-3xl sm:h-72 sm:w-72"></div>
+        </div>
+        <div class="mx-auto max-w-7xl px-4 sm:px-6">
+            <div class="hero-stage">
+                <div class="grid gap-10 md:gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+                    <div class="space-y-8">
+                        <div class="accent-chip text-primary/80">
+                            <span class="material-icons text-base">diamond</span>
+                            <span>Prestijli Taşıma</span>
+                        </div>
+                        <h1 class="font-luxury text-4xl leading-tight text-primary/95 sm:text-5xl lg:text-[3.65rem]">
+                            Şehir içi ve şehirler arası lüks taşımacılıkta referans noktası.
+                        </h1>
+                        <p class="max-w-2xl text-lg leading-relaxed text-text-muted">
+                            Özdemir Nakliyat ile eşyalarınız, sanat eserleri gibi özen ve zarafetle taşınır. Sigortalı süreç yönetimi, tam donanımlı ekipmanlar ve kişiselleştirilmiş planlama ile yeni yaşam alanlarınıza kusursuz geçiş sağlayın.
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <button class="outline-button w-full px-8 py-3 text-[0.65rem] sm:w-auto">
+                                HACİM HESAPLAMA
+                            </button>
+                            <button class="halo-button relative w-full px-9 py-3 text-[0.65rem] sm:w-auto">
+                                <span class="relative inline-block">NAKLİYAT TEKLİF FORMU</span>
+                            </button>
+                        </div>
+                        <div class="grid gap-4 md:grid-cols-3">
+                            <div class="stat-item">
+                                <p class="text-4xl font-luxury text-primary/90">%100</p>
+                                <p class="text-[0.7rem] uppercase tracking-[0.35em] text-text-muted">Sigortalı Taşıma</p>
+                            </div>
+                            <div class="stat-item">
+                                <p class="text-4xl font-luxury text-primary/90">+2500</p>
+                                <p class="text-[0.7rem] uppercase tracking-[0.35em] text-text-muted">Mutlu Müşteri</p>
+                            </div>
+                            <div class="stat-item">
+                                <p class="text-4xl font-luxury text-primary/90">7/24</p>
+                                <p class="text-[0.7rem] uppercase tracking-[0.35em] text-text-muted">Özel Destek</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-detail-card space-y-6 lg:mt-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs uppercase tracking-[0.55em] text-primary/80">Elit Hizmet Manifestosu</span>
+                            <span class="material-icons text-primary/80">auto_awesome</span>
+                        </div>
+                        <div class="divider-line"></div>
+                        <div class="space-y-4 text-sm text-text-muted">
+                            <div class="flex items-start gap-3">
+                                <span class="mt-1 flex h-7 w-7 items-center justify-center rounded-full bg-primary-soft text-primary">
+                                    <i class="material-icons text-base">verified</i>
+                                </span>
+                                <div>
+                                    <p class="text-base font-semibold text-text-primary">Kişiye Özel Planlama</p>
+                                    <p>Uzman danışmanlarımız taşınma planınızı adım adım tasarlar.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="mt-1 flex h-7 w-7 items-center justify-center rounded-full bg-primary-soft text-primary">
+                                    <i class="material-icons text-base">local_shipping</i>
+                                </span>
+                                <div>
+                                    <p class="text-base font-semibold text-text-primary">Butik Araç Filosu</p>
+                                    <p>Son model araçlarımızla her yolculuk özel koleksiyon taşır gibi gerçekleşir.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="mt-1 flex h-7 w-7 items-center justify-center rounded-full bg-primary-soft text-primary">
+                                    <i class="material-icons text-base">workspace_premium</i>
+                                </span>
+                                <div>
+                                    <p class="text-base font-semibold text-text-primary">Prestij Garanti</p>
+                                    <p>İmza attığımız her projede kusursuzluk ve güven duygusunu garanti ederiz.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="divider-line"></div>
+                        <div class="flex flex-wrap gap-3 text-xs uppercase tracking-[0.35em] text-primary/80">
+                            <span class="accent-chip">Sigortalı Taşıma</span>
+                            <span class="accent-chip">Lüks Paketleme</span>
+                            <span class="accent-chip">VIP Destek</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+<section class="relative py-24" id="about">
+<div class="mx-auto max-w-6xl px-4 sm:px-6">
+<div class="glass-panel rounded-2xl px-10 py-16 text-center">
+<div class="flex flex-col items-center gap-5">
+<span class="text-xs uppercase tracking-[0.65em] text-primary/80">Hizmet Yaklaşımı</span>
+<h2 class="font-luxury text-4xl text-primary/90 sm:text-5xl">Evden Eve Nakliyatta Sofistike Çözüm Ortağınız</h2>
+<div class="w-32 h-[1px] bg-gradient-to-r from-transparent via-primary/60 to-transparent"></div>
+<p class="max-w-3xl text-lg leading-relaxed text-text-muted">
+                    Profesyonel ekiplerimiz, ultra dayanıklı paketleme materyalleri ve hassas takip sistemlerimizle her taşıma sürecini VIP standartlarda yönetiyoruz. Türkiye'nin dört bir yanında kusursuz planlama ile rahatlığı ve güveni aynı anda deneyimleyin.
                 </p>
-<div class="flex justify-center space-x-4">
-<button class="bg-transparent border-2 border-white text-white font-bold py-3 px-8 rounded-lg hover:bg-white hover:text-gray-900 transition-all">
-                        HACİM HESAPLAMA
-                    </button>
-<button class="bg-primary text-white font-bold py-3 px-8 rounded-lg hover:opacity-90 transition-opacity">
-                        NAKLİYAT TEKLİF FORMU
-                    </button>
+</div>
+<div class="mt-12 grid gap-6 md:grid-cols-3">
+<div class="satin-card rounded-2xl p-7 text-left">
+<div class="flex items-center justify-between">
+<span class="text-sm uppercase tracking-[0.5em] text-primary/70">Planlama</span>
+<span class="material-icons text-primary/70">event_available</span>
+</div>
+<div class="mt-6 text-lg font-semibold text-text-primary">Zaman Yönetimi Ritüeli</div>
+<p class="mt-3 text-sm leading-relaxed text-text-muted">
+                        Taşınma takviminizi dakikası dakikasına yöneterek kusursuz koordinasyon sağlarız.
+                    </p>
+</div>
+<div class="satin-card rounded-2xl p-7 text-left">
+<div class="flex items-center justify-between">
+<span class="text-sm uppercase tracking-[0.5em] text-primary/70">Güvenlik</span>
+<span class="material-icons text-primary/70">security</span>
+</div>
+<div class="mt-6 text-lg font-semibold text-text-primary">Yüksek Güvenlik Protokolleri</div>
+<p class="mt-3 text-sm leading-relaxed text-text-muted">
+                        Sigortalı taşıma ve özel ambalaj teknikleriyle değerli eşyalarınızı kusursuzca koruruz.
+                    </p>
+</div>
+<div class="satin-card rounded-2xl p-7 text-left">
+<div class="flex items-center justify-between">
+<span class="text-sm uppercase tracking-[0.5em] text-primary/70">Destek</span>
+<span class="material-icons text-primary/70">headset_mic</span>
+</div>
+<div class="mt-6 text-lg font-semibold text-text-primary">24 Saat Concierge</div>
+<p class="mt-3 text-sm leading-relaxed text-text-muted">
+                        Taşınma süreciniz boyunca size özel concierge temsilcimiz tüm sorularınızı yanıtlar.
+                    </p>
+</div>
+</div>
 </div>
 </div>
 </section>
-<section class="py-20 bg-background-light dark:bg-background-dark">
-<div class="container mx-auto px-6">
-<div class="text-center mb-12">
-<h2 class="text-4xl font-bold text-text-light dark:text-text-dark mb-2">Evden Eve Nakliyat Hizmetleri</h2>
-<div class="w-24 h-1 bg-primary mx-auto"></div>
+<section class="relative py-24" id="services">
+<div class="mx-auto max-w-7xl px-4 sm:px-6">
+<div class="mb-12 flex flex-col items-center gap-4 text-center">
+<span class="text-xs uppercase tracking-[0.65em] text-primary/80">Hizmetlerimiz</span>
+<h2 class="font-luxury text-4xl text-primary/90 sm:text-5xl">İmza Niteliğinde Taşımacılık Seçenekleri</h2>
+<p class="max-w-3xl text-base leading-relaxed text-text-muted">
+                Titizlikle seçilmiş uzman ekibimiz ve teknoloji destekli alt yapımızla her biri benzersiz detaylara sahip premium hizmetleri keşfedin.
+            </p>
 </div>
-<p class="text-center max-w-4xl mx-auto text-muted-light dark:text-muted-dark leading-relaxed">
-                    Özdemir Nakliyat firması aracısında olan vatandaşlarımıza Profesyonel nakliye ekibimizle Sigorta sözleşmeli evden eve taşıma hizmetleri sunuyoruz. Profesyonellerin tercihi güvenilir nakliye firmalarıdır. Özdemir Nakliyat olarak bizler sizlere güven ve kaliteyi bir arada sunarak profesyonel taşımacılık hizmetleri veriyoruz. Sizlerde bu kaliteli hizmetlerden faydalanmak isterseniz tek yapmanız gereken bizimle iletişime geçmektir.
-                </p>
-</div>
-</section>
-<section class="py-20 bg-surface-light dark:bg-surface-dark">
-<div class="container mx-auto px-6">
-<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-<div class="text-center p-6 bg-background-light dark:bg-background-dark rounded-lg shadow-lg transform hover:-translate-y-2 transition-transform">
-<div class="flex items-center justify-center h-16 w-16 rounded-full bg-primary text-white mx-auto mb-4">
+<div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+<div class="satin-card rounded-2xl p-8 text-left">
+<div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-soft text-primary shadow-halo">
 <i class="material-icons text-3xl">home</i>
 </div>
-<h3 class="text-xl font-bold mb-2">Evden Eve Nakliyat</h3>
-<p class="text-muted-light dark:text-muted-dark">Güvenli ve sigortalı ev taşıma hizmetleri ile yeni evinize sorunsuz geçin.</p>
+<h3 class="mt-8 text-2xl font-semibold text-text-primary">Evden Eve Nakliyat</h3>
+<p class="mt-4 text-sm leading-relaxed text-text-muted">
+                    Güvenli ve sigortalı taşıma süreçleri ile yeni evinize elit bir ritüelle geçiş yapın.
+                </p>
 </div>
-<div class="text-center p-6 bg-background-light dark:bg-background-dark rounded-lg shadow-lg transform hover:-translate-y-2 transition-transform">
-<div class="flex items-center justify-center h-16 w-16 rounded-full bg-primary text-white mx-auto mb-4">
+<div class="satin-card rounded-2xl p-8 text-left">
+<div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-soft text-primary shadow-halo">
 <i class="material-icons text-3xl">location_city</i>
 </div>
-<h3 class="text-xl font-bold mb-2">Şehirler Arası Nakliyat</h3>
-<p class="text-muted-light dark:text-muted-dark">Türkiye'nin her yerine eşyalarınızı güvenle taşıyoruz.</p>
+<h3 class="mt-8 text-2xl font-semibold text-text-primary">Şehirler Arası Nakliyat</h3>
+<p class="mt-4 text-sm leading-relaxed text-text-muted">
+                    Türkiye'nin her şehrine özel planlanmış lojistik ağımızla kusursuz transfer deneyimi yaşayın.
+                </p>
 </div>
-<div class="text-center p-6 bg-background-light dark:bg-background-dark rounded-lg shadow-lg transform hover:-translate-y-2 transition-transform">
-<div class="flex items-center justify-center h-16 w-16 rounded-full bg-primary text-white mx-auto mb-4">
+<div class="satin-card rounded-2xl p-8 text-left">
+<div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-soft text-primary shadow-halo">
 <i class="material-icons text-3xl">inventory_2</i>
 </div>
-<h3 class="text-xl font-bold mb-2">Eşya Depolama</h3>
-<p class="text-muted-light dark:text-muted-dark">Fazla eşyalarınız için güvenli ve modern depolama çözümleri.</p>
+<h3 class="mt-8 text-2xl font-semibold text-text-primary">Eşya Depolama</h3>
+<p class="mt-4 text-sm leading-relaxed text-text-muted">
+                    İklim kontrollü alanlarımızda eşyalarınızı sınırsız güven ve konforla muhafaza edin.
+                </p>
 </div>
-<div class="text-center p-6 bg-background-light dark:bg-background-dark rounded-lg shadow-lg transform hover:-translate-y-2 transition-transform">
-<div class="flex items-center justify-center h-16 w-16 rounded-full bg-primary text-white mx-auto mb-4">
+<div class="satin-card rounded-2xl p-8 text-left">
+<div class="flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-soft text-primary shadow-halo">
 <i class="material-icons text-3xl">business</i>
 </div>
-<h3 class="text-xl font-bold mb-2">Ofis Taşımacılığı</h3>
-<p class="text-muted-light dark:text-muted-dark">İş yerinizi titizlikle ve planlı bir şekilde yeni adresine taşıyoruz.</p>
+<h3 class="mt-8 text-2xl font-semibold text-text-primary">Ofis Taşımacılığı</h3>
+<p class="mt-4 text-sm leading-relaxed text-text-muted">
+                    Kurumsal taşımacılık süreçlerinizi prestijli altyapımızla planlı ve verimli şekilde yönetin.
+                </p>
+</div>
+</div>
+</div>
+</section>
+<section class="relative py-24" id="references">
+<div class="mx-auto max-w-6xl px-4 sm:px-6">
+<div class="glass-panel rounded-2xl px-10 py-16">
+<div class="grid gap-10 lg:grid-cols-2 lg:items-center">
+<div class="space-y-6">
+<span class="text-xs uppercase tracking-[0.6em] text-primary/80">Prestij Standartları</span>
+<h2 class="font-luxury text-4xl text-primary/90 sm:text-5xl">Beklentileri Aşan Referanslar</h2>
+<p class="text-base leading-relaxed text-text-muted">
+                        Yüksek segment konutlar, sanat galerileri ve kurumsal projelerden oluşan referans listemiz ile konfor alanınızı genişletiyoruz. Her işte aynı zarafet, aynı disiplin ve aynı imza kalitesi.
+                    </p>
+<div class="divider-line"></div>
+<div class="grid gap-4 text-sm text-text-muted">
+<div class="flex items-start gap-3">
+<span class="material-icons text-primary">check_circle</span>
+<p>Lüks rezidans ve villa taşımacılığında %99 memnuniyet skorları.</p>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-icons text-primary">check_circle</span>
+<p>Kurumsal ofis projelerinde gece operasyonlarıyla sıfır iş kaybı.</p>
+</div>
+<div class="flex items-start gap-3">
+<span class="material-icons text-primary">check_circle</span>
+<p>Sanat eseri taşıma protokollerinde uluslararası standart uyumu.</p>
+</div>
+</div>
+</div>
+<div class="satin-card rounded-2xl p-8 space-y-6">
+<div class="flex items-center justify-between">
+<span class="text-xs uppercase tracking-[0.55em] text-primary/70">Elegance Index</span>
+<span class="material-icons text-primary/70">bar_chart</span>
+</div>
+<div class="text-5xl font-luxury text-primary/90">9.8 / 10</div>
+<p class="text-sm leading-relaxed text-text-muted">
+                        Müşterilerimiz, premium hizmet deneyimimizi "mükemmel" olarak nitelendiriyor. Kusursuz iletişim, şeffaf planlama ve benzersiz özen ile beklentilerinizi aşmak için buradayız.
+                    </p>
+<div class="divider-line"></div>
+<div class="grid gap-4 text-sm text-text-muted">
+<div class="flex items-center justify-between">
+<span>Güvenlik</span>
+<div class="w-1/2 rounded-full bg-white/10 p-[2px]"><div class="h-2 rounded-full bg-primary" style="width: 95%"></div></div>
+</div>
+<div class="flex items-center justify-between">
+<span>Zamanlama</span>
+<div class="w-1/2 rounded-full bg-white/10 p-[2px]"><div class="h-2 rounded-full bg-primary" style="width: 92%"></div></div>
+</div>
+<div class="flex items-center justify-between">
+<span>Müşteri Deneyimi</span>
+<div class="w-1/2 rounded-full bg-white/10 p-[2px]"><div class="h-2 rounded-full bg-primary" style="width: 97%"></div></div>
+</div>
+</div>
 </div>
 </div>
 </div>
 </section>
 </main>
-<footer class="bg-gray-800 dark:bg-gray-900 text-white">
-<div class="container mx-auto px-6 py-12">
-<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+<footer class="mt-16" id="contact">
+<div class="mx-auto max-w-7xl px-4 py-16 sm:px-6">
+<div class="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
+<div class="glass-panel rounded-2xl px-10 py-12 space-y-8">
 <div>
-<h3 class="text-2xl font-bold mb-4">ÖZDEMİR <span class="text-primary">NAKLİYAT</span></h3>
-<p class="text-gray-400">Kaliteli ve güvenilir taşımacılığın adresi. Müşteri memnuniyeti bizim için her zaman önceliklidir.</p>
+<h3 class="font-luxury text-3xl text-primary/90">ÖZDEMİR <span class="text-primary">NAKLİYAT</span></h3>
+<p class="mt-4 max-w-xl text-sm leading-relaxed text-text-muted">
+                        Lüks taşımacılık kültürünü benimseyen Özdemir Nakliyat, şehrin en prestijli projelerinde yer alarak kusursuz deneyimler yaratır. Eşyalarınızı değil, yaşam tarzınızı taşıyoruz.
+                    </p>
 </div>
+<div class="divider-line"></div>
+<div class="grid gap-6 text-sm text-text-muted footer-grid sm:grid-cols-2">
 <div>
-<h4 class="text-lg font-semibold mb-4 text-primary">Hızlı Menü</h4>
-<ul class="space-y-2">
-<li><a class="text-gray-400 hover:text-white transition-colors" href="#">Ana Sayfa</a></li>
-<li><a class="text-gray-400 hover:text-white transition-colors" href="#">Hakkımızda</a></li>
-<li><a class="text-gray-400 hover:text-white transition-colors" href="#">Hizmetlerimiz</a></li>
-<li><a class="text-gray-400 hover:text-white transition-colors" href="#">İletişim</a></li>
+<h4 class="text-xs uppercase tracking-[0.55em] text-primary/80">Hızlı Menü</h4>
+<ul class="mt-4 space-y-3">
+<li><a href="#hero">Ana Sayfa</a></li>
+<li><a href="#about">Hakkımızda</a></li>
+<li><a href="#services">Hizmetlerimiz</a></li>
+<li><a href="#contact">İletişim</a></li>
 </ul>
 </div>
 <div>
-<h4 class="text-lg font-semibold mb-4 text-primary">Hizmetlerimiz</h4>
-<ul class="space-y-2">
-<li><a class="text-gray-400 hover:text-white transition-colors" href="#">Evden Eve Nakliyat</a></li>
-<li><a class="text-gray-400 hover:text-white transition-colors" href="#">Şehirler Arası Nakliyat</a></li>
-<li><a class="text-gray-400 hover:text-white transition-colors" href="#">Eşya Depolama</a></li>
-<li><a class="text-gray-400 hover:text-white transition-colors" href="#">Ofis Taşımacılığı</a></li>
-</ul>
-</div>
-<div>
-<h4 class="text-lg font-semibold mb-4 text-primary">İletişim</h4>
-<ul class="space-y-3 text-gray-400">
-<li class="flex items-start"><i class="material-icons text-primary mt-1 mr-2">place</i><span>Adres: Örnek Mah. Nakliyat Sk. No:123, Üsküdar/İstanbul</span></li>
-<li class="flex items-center"><i class="material-icons text-primary mr-2">phone</i><span>0216 494 5337</span></li>
-<li class="flex items-center"><i class="material-icons text-primary mr-2">email</i><span>info@ozdemirnakliyat.com</span></li>
+<h4 class="text-xs uppercase tracking-[0.55em] text-primary/80">Hizmetler</h4>
+<ul class="mt-4 space-y-3">
+<li><a href="#services">Evden Eve Nakliyat</a></li>
+<li><a href="#services">Şehirler Arası Nakliyat</a></li>
+<li><a href="#services">Eşya Depolama</a></li>
+<li><a href="#services">Ofis Taşımacılığı</a></li>
 </ul>
 </div>
 </div>
-<div class="mt-12 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm">
-<p>© 2023 Özdemir Nakliyat. Tüm hakları saklıdır.</p>
 </div>
+<div class="glass-panel rounded-2xl px-10 py-12 space-y-6">
+<h4 class="text-xs uppercase tracking-[0.55em] text-primary/80">İletişim</h4>
+<ul class="space-y-5 text-sm text-text-muted">
+<li class="flex items-start gap-3"><span class="material-icons text-primary">place</span><span>Adres: Örnek Mah. Nakliyat Sk. No:123, Üsküdar/İstanbul</span></li>
+<li class="flex items-center gap-3"><span class="material-icons text-primary">phone</span><span>0535 554 98 58</span></li>
+<li class="flex items-center gap-3"><span class="material-icons text-primary">email</span><span>info@ozdemirnakliyat.com</span></li>
+</ul>
+<div class="divider-line"></div>
+<p class="text-xs uppercase tracking-[0.45em] text-primary/70">24 Saat İçinde Teklif Garantisi</p>
+</div>
+</div>
+<div class="mt-12 text-center text-[0.6rem] uppercase tracking-[0.5em] text-text-muted/70">© 2023 Özdemir Nakliyat. Tüm hakları saklıdır.</div>
 </div>
 </footer>
-
 </body></html>
